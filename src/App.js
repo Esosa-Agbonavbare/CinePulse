@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { ErrorBoundary } from './components';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Home } from './pages';
+import { Home, MovieListing } from './pages';
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/movies" element={<MovieListing />} />
           </Routes>
         </Router>
       </Suspense>
