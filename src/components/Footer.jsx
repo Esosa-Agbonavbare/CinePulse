@@ -3,7 +3,7 @@ import { socials } from '../assets';
 
 const Footer = () => {
   return (
-    <div className="bg-black text-white py-8">
+    <div className="bg-black text-white py-8 mt-auto">
         <div className="flex flex-col items-center font-rubik">
             <img 
             src={socials} 
