@@ -4,7 +4,7 @@ import { animateScroll as scroller } from 'react-scroll';
 import { light, search, ifj, quantumdawn, mulitverse, rmi, couple, tik, 
     vampire, wildforest, sportcar, thecodes, thespace, si, poison, enroute, genesis, 
     secret, faith, romance } from '../assets';
-import { MovieCategory, Footer, Modal } from '../components';
+import { MovieCategory, Footer, Modal, ErrorResponse } from '../components';
 import { AxiosInstance } from '../utils';
 
 const MovieListing = () => {
@@ -13,6 +13,9 @@ const MovieListing = () => {
     const [searchResponse, setSearchResponse] = useState('');
     const [searchHistory, setSearchHistory] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showSearchError, setShowSearchError] = useState(false);
+    const [showHistoryError, SetShowHistoryError] = useState(false);
+    const [error, setError] = useState('');
 
     const movieCategories = [
         {
@@ -62,6 +65,8 @@ const MovieListing = () => {
     }
 
     const handleSearch = async (query) => {
+        setShowSearchError(false);
+        SetShowHistoryError(false);
         if (!query) return;
         try {
             const response = await AxiosInstance.get('/movie/search',
@@ -74,22 +79,30 @@ const MovieListing = () => {
             console.log(response.data);
         } catch (error) {
             console.error('Error fetching search results:', error);
+            setError('Error fetching search results. Please try again.');
+            setShowSearchError(true);
         }
     };
 
     const handleKeyPress = (event) => {
+        setShowSearchError(false);
+        SetShowHistoryError(false);
         if (event.key === 'Enter') {
             handleSearch(searchQuery);
         }
     };
 
     const fetchSearchHistory = async () => {
+        setShowSearchError(false);
+        SetShowHistoryError(false);
         try {
             const response = await AxiosInstance.get('/movie/history');
             setSearchHistory(response.data.data);
             console.log(response.data);
         } catch (error) {
             console.error('Error fetching search history:', error);
+            setError('Error fetching search history. Please try again.');
+            SetShowHistoryError(true);
         }
     };
 
@@ -130,6 +143,7 @@ const MovieListing = () => {
                         style={{ cursor: "pointer"}}
                     />
                 </div>
+                {showSearchError && <ErrorResponse message={error} />}
                 <div className="mt-4 z-50">
                     <button 
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -148,6 +162,7 @@ const MovieListing = () => {
                                 </ul>
                             </div>
                         )}
+                        {showHistoryError && <ErrorResponse message={error} />}
                     </div>
                 </div>
             </div>

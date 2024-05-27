@@ -2,3 +2,4 @@ export { default as ErrorBoundary } from './common/ErrorBoundary';
 export { default as MovieCategory } from './MovieCategory';
 export { default as Footer } from './Footer';
 export { default as Modal } from './Modal';
+export { default as ErrorResponse } from './ErrorResponse';
